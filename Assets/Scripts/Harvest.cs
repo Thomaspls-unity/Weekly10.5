@@ -2,27 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using TMPro;
 
 public class Harvest : MonoBehaviour
 {
     [SerializeField] private Camera cam;
     [SerializeField] private NavMeshAgent harvestAgent;
-    private BoxCollider harvestCollider;
+    public TextMeshProUGUI scoreText;
+    private int score;
     // Start is called before the first frame update
     void Start()
     {
-        harvestCollider = GetComponent<BoxCollider>();
+        score = 0;
+        scoreText.text = "Score:" + score;
     }
 
     // Update is called once per frame
     void Update()
     {
         HarvestMove();
-    }
-
-    public void HarvestCrop()
-    {
-
     }
 
     private void HarvestMove()
@@ -36,6 +34,14 @@ public class Harvest : MonoBehaviour
             {
                 harvestAgent.SetDestination(hit.point);
             }
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Crop"))
+        {
+            score += 1;
         }
     }
 }

@@ -4,22 +4,20 @@ using UnityEngine;
 
 public class Crop : MonoBehaviour
 {
-    public Transform[] cropStages;
-    public float growthRate = 8f;
-    public bool isReady = false;
+    [SerializeField] public Transform[] cropStages;
+    private float growthRate = 8f;
+    private bool isReady = false;
+    
 
     private void Awake()
     {
         StartCoroutine(Grow());
     }
-
+    
     // Update is called once per frame
     void Update()
     {
-        if (isReady)
-        {
-            
-        }
+
     }
 
     private IEnumerator Grow()
@@ -33,6 +31,10 @@ public class Crop : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        
+        if (other.CompareTag("Player") && isReady)
+        {
+            Destroy(gameObject);
+            Debug.Log("Harvester collides with Crop");
+        }
     }
 }
